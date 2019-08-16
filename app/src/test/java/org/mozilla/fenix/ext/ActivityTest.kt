@@ -13,6 +13,7 @@ import org.robolectric.annotation.Config
 import io.mockk.mockk
 import android.app.Activity
 import android.view.View
+
 import android.view.WindowManager
 import android.view.Window
 import org.robolectric.Shadows.shadowOf
