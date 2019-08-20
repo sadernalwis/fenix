@@ -8,7 +8,6 @@ package org.mozilla.fenix.ui.robots
 
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.assertion.ViewAssertions.matches
-import androidx.test.espresso.matcher.ViewMatchers.withContentDescription
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.platform.app.InstrumentationRegistry
@@ -49,15 +48,6 @@ class BrowserRobot {
             NavigationToolbarRobot().interact()
             return NavigationToolbarRobot.Transition()
         }
-
-        fun openHomeScreen(interact: HomeScreenRobot.() -> Unit): HomeScreenRobot.Transition {
-            mDevice.waitForIdle()
-
-            tabsCounter().click()
-
-            HomeScreenRobot().interact()
-            return HomeScreenRobot.Transition()
-        }
     }
 }
 
@@ -67,5 +57,3 @@ fun browserScreen(interact: BrowserRobot.() -> Unit): BrowserRobot.Transition {
 }
 
 fun navURLBar() = onView(withId(R.id.mozac_browser_toolbar_url_view))
-
-private fun tabsCounter() = onView(withContentDescription("Tabs"))
