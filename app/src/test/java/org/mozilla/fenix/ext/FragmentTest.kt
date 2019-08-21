@@ -26,7 +26,7 @@ import androidx.navigation.fragment.NavHostFragment
 import org.mozilla.fenix.components.Components
 import androidx.navigation.NavController
 
-@ObsoleteCoroutinesApi
+/*@ObsoleteCoroutinesApi
 @RunWith(RobolectricTestRunner::class)
 @Config(application = TestApplication::class)
 
@@ -39,15 +39,17 @@ class FragmentTest {
     val navController = spyk(NavController(testContext))
     val mockId = 4
     val mockNavHostFragment = spyk(NavHostFragment())
-    val mockFragment = spyk(Fragment())
+    //val spykFragment = spyk(Fragment())
+    val mockFragment = mockk<Fragment>(relaxed=true)
     //private fun findNavController(mockFragment) = navController
 
     @Test
     fun `Test nav fun with ID and directions`() {
+        every {(findNavController(Fragment))} answers {(findNavController(mockFragment))}
         every {(findNavController(mockFragment))} returns navController
         //every { mock["findNavController"]() } returns navController
 
         mockFragment.nav(4, navDirections)
-        verify {(findNavController(mockFragment).nav(mockId, navDirections))}
+        verify {(navController.nav(mockId, navDirections))}
     }
-}
+}*/
