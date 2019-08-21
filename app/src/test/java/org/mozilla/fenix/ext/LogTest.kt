@@ -12,11 +12,8 @@ import org.robolectric.RobolectricTestRunner
 import org.robolectric.annotation.Config
 import io.mockk.mockk
 import io.mockk.mockkStatic
-import io.mockk.spyk
 import io.mockk.verify
-import io.mockk.every
 import android.util.Log
-import org.mozilla.fenix.BuildConfig
 
 @ObsoleteCoroutinesApi
 @RunWith(RobolectricTestRunner::class)
@@ -38,5 +35,23 @@ class LogTest {
         logWarn("hi","hi")
         verify {(logWarn("hi", "hi"))}
         verify {(Log.w("hi", "hi"))}
+    }
+
+    @Test
+    fun `Test log warn function with tag, message, and exception args`() {
+        mockkStatic(Log::class)
+        val mockThrowable: Throwable = mockk(relaxed=true)
+        logWarn("hi","hi", mockThrowable)
+        verify {(logWarn("hi", "hi", mockThrowable))}
+        verify {(Log.w("hi", "hi", mockThrowable))}
+    }
+
+    @Test
+    fun `Test log error function with tag, message, and exception args`() {
+        mockkStatic(Log::class)
+        val mockThrowable: Throwable = mockk(relaxed=true)
+        logErr("hi","hi", mockThrowable)
+        verify {(logErr("hi", "hi", mockThrowable))}
+        verify {(Log.e("hi", "hi", mockThrowable))}
     }
 }
