@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.NavDirections
 import androidx.navigation.NavOptions
 import androidx.navigation.Navigator
+import androidx.navigation.Navigator.Extras
 import androidx.navigation.fragment.NavHostFragment.findNavController
 import org.mozilla.fenix.components.Components
 

@@ -24,8 +24,8 @@ import androidx.navigation.NavController
 import androidx.navigation.NavDirections
 import androidx.navigation.NavOptions
 import androidx.navigation.Navigator
-//import io.sentry.Sentry
-//import org.mozilla.fenix.BuildConfig
+import io.sentry.Sentry
+import org.mozilla.fenix.BuildConfig
 import android.content.res.Resources
 import androidx.navigation.NavDestination
 import androidx.navigation.Navigator.Extras
