@@ -32,6 +32,7 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.NavDestination
 import org.mozilla.fenix.components.Components
 import androidx.navigation.NavController
+import androidx.navigation.Navigator.Extras
 
 @ObsoleteCoroutinesApi
 @RunWith(RobolectricTestRunner::class)
@@ -39,24 +40,13 @@ import androidx.navigation.NavController
 
 class FragmentTest {
 
-    //val navDirections = mockk<NavDirections>(relaxed=true)
     val navDirections: NavDirections = mockk(relaxed=true)
-    //val mockDestination: NavDestination = mockk(relaxed=true)
     val mockDestination= spyk(NavDestination("hi"))
-    //val mockExtras: Extras = mockk(relaxed=true)
-    //val mockFragment: Fragment = mockk(relaxed=true)
-    //val navController: NavController = mockk(relaxed=true)
+    val mockExtras: Extras = mockk(relaxed=true)
     val mockId = 4
-    //val mockNavHostFragment = spyk(NavHostFragment())
     val navController = spyk(NavController(testContext))
-    //val spykFragment = spyk(Fragment())
     val mockFragment: Fragment= mockk(relaxed=true)
-    //val mockView: View= mockk(relaxed=true)
-    //private fun findNavController(mockFragment) = navController
-
-    /*fun findNavController() : NavController? {
-        return navController
-    }*/
+    val mockOptions: NavOptions = mockk(relaxed=true)
 
     @Test
     fun `Test nav fun with ID and directions`() {
@@ -72,6 +62,40 @@ class FragmentTest {
         verify { mockFragment.nav(mockId, navDirections) }
         verify{ (NavHostFragment.findNavController(mockFragment).getCurrentDestination()) }
         verify{ (NavHostFragment.findNavController(mockFragment).navigate(navDirections)) }
+        confirmVerified(mockFragment)
+    }
+
+    @Test
+    fun `Test nav fun with ID, directions, and extras`() {
+        mockkStatic(NavHostFragment::class)
+        every {(NavHostFragment.findNavController(mockFragment))} returns navController
+        every {(NavHostFragment.findNavController(mockFragment).getCurrentDestination())} returns mockDestination
+        every {(NavHostFragment.findNavController(mockFragment).navigate(navDirections, mockExtras))} just Runs
+        every {(mockDestination.getId())} returns mockId
+        every {(navController.getCurrentDestination())} returns mockDestination
+        every {(NavHostFragment.findNavController(mockFragment).getCurrentDestination()?.getId())} answers {(mockDestination.getId())}
+
+        mockFragment.nav(mockId, navDirections, mockExtras)
+        verify { mockFragment.nav(mockId, navDirections, mockExtras) }
+        verify{ (NavHostFragment.findNavController(mockFragment).getCurrentDestination()) }
+        verify{ (NavHostFragment.findNavController(mockFragment).navigate(navDirections, mockExtras)) }
+        confirmVerified(mockFragment)
+    }
+
+    @Test
+    fun `Test nav fun with ID, directions, and options`() {
+        mockkStatic(NavHostFragment::class)
+        every {(NavHostFragment.findNavController(mockFragment))} returns navController
+        every {(NavHostFragment.findNavController(mockFragment).getCurrentDestination())} returns mockDestination
+        every {(NavHostFragment.findNavController(mockFragment).navigate(navDirections, mockOptions))} just Runs
+        every {(mockDestination.getId())} returns mockId
+        every {(navController.getCurrentDestination())} returns mockDestination
+        every {(NavHostFragment.findNavController(mockFragment).getCurrentDestination()?.getId())} answers {(mockDestination.getId())}
+
+        mockFragment.nav(mockId, navDirections, mockOptions)
+        verify { mockFragment.nav(mockId, navDirections, mockOptions) }
+        verify{ (NavHostFragment.findNavController(mockFragment).getCurrentDestination()) }
+        verify{ (NavHostFragment.findNavController(mockFragment).navigate(navDirections, mockOptions)) }
         confirmVerified(mockFragment)
     }
 }
