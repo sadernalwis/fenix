@@ -43,11 +43,13 @@ import io.mockk.mockkClass
 /*@ObsoleteCoroutinesApi
 @RunWith(RobolectricTestRunner::class)
 @Config(application = TestApplication::class)
-val mockContext: Context = mockk(relaxed=true)
-val mockFenixApp: FenixApplication = mockk(relaxed=true)
+
 
 
 class ContextTest() {
+    val mockContext: Context = mockk(relaxed=true)
+    val mockFenixApp: FenixApplication = mockk(relaxed=true)
+
     @Test
     fun `Test setting application`() {
         mockContext.application = mockFenixApp
