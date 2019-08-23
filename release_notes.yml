@@ -1,0 +1,11 @@
+name: ReleaseNotes
+
+on: [milestone]
+
+jobs:
+  generate-release-notes:
+    steps:
+    - name: generate
+      uses: Decathlon/release-notes-generator-action@v1.0.1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
